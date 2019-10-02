@@ -33,9 +33,6 @@ Plugin 'tpope/vim-unimpaired'
 " Comment stuff out. Use gcc to comment out a line (takes a count), gc to comment out the target of a motion
 Plugin 'tpope/vim-commentary'
 
-" A Vim plugin that highlights which characters to target for f, F and family. No mappings are needed.
-"Plugin 'unblevable/quick-scope'
-
 " Custom text objects
 Plugin 'kana/vim-textobj-user'
 " Function arguments as text objects
@@ -62,21 +59,32 @@ Plugin 'wincent/command-t'
 " auto-complete
 Plugin 'Valloric/YouCompleteMe'
 
-" ruler replacement with themes
-"Plugin 'bling/vim-airline'
-"Plugin 'vim-airline/vim-airline-themes'
-
 " rainbow parenthesis
 Plugin 'luochen1990/rainbow'
 
+" goyo focused editing
+Plugin 'junegunn/goyo.vim'
+
 " color theme(s)
-Plugin 'seoul256.vim'
 Plugin 'NLKNguyen/papercolor-theme'
 Plugin 'rakr/vim-two-firewatch'
 Plugin 'AlessandroYorba/Sierra'
-Plugin 'jacoborus/tender.vim'
-Plugin 'cocopon/iceberg.vim'
 Plugin 'sts10/vim-pink-moon'
+Plugin 'Nequo/vim-allomancer'
+Plugin 'koirand/tokyo-metro.vim'
+Plugin 'dennougorilla/azuki.vim'
+Plugin 'fcpg/vim-farout'
+Plugin 'nightsense/vim-crunchbang'
+Plugin 'sainnhe/gruvbox-material'
+Plugin 'arzg/vim-oldbook8'
+Plugin 'axvr/photon.vim'
+Plugin 'sainnhe/vim-color-forest-night'
+
+" rust
+Plugin 'rust-lang/rust.vim'
+
+" Syntax checking
+Plugin 'vim-syntastic/syntastic'
 
 " all Plugins must be added before this line:
 call vundle#end()            " required
@@ -98,43 +106,17 @@ set encoding=utf-8
 "          |_|   |_|
 " Appearance --------------------------------------------{{{
 
-
-" Custom colors for Quick Scope when using firewatch
-"augroup qs_colors
-"  autocmd!
-"  autocmd ColorScheme * highlight QuickScopePrimary guifg='#9b59b6' ctermfg=155 cterm=underline
-"  autocmd ColorScheme * highlight QuickScopeSecondary guifg='#9b59b6' ctermfg=81 cterm=underline
-"augroup END
-
 " set 256 colors
 set t_Co=256
 
 " set the colorscheme
-"let g:seoul256_background=97
-"colorscheme seoul256
-
-" PaperColor
-"set background=light
-"colorscheme PaperColor
+set background=dark
+colo sierra
 
 " firewatch
-set background=dark
-let g:two_firewatch_italics=1
-colo two-firewatch
+" let g:two_firewatch_italics=1
+" colo two-firewatch
 "let g:airline_theme='twofirewatch'
-
-" Sierra
-"let g:sierra_Sunset=1
-"colorscheme sierra
-
-" tender
-"colorscheme tender
-
-" iceberg
-"colorscheme iceberg
-
-" pink-moon
-"colorscheme pink-moon
 
 " show the ruler on the right side of the status line
 set ruler
@@ -145,8 +127,8 @@ set number
 " enable relative line numbers
 set relativenumber
 
-" draw a line at column 120
-set colorcolumn=120
+" draw a line at column 100
+set colorcolumn=100
 
 " don't show the mode as this will be included by the status line
 set noshowmode
@@ -474,6 +456,15 @@ set wildignore=*.o,*.a,*.pyc,*.swp,.git,.git/*,*.exe
 " very magic searching
 nnoremap / /\v
 vnoremap / /\v
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" reminder that folding exists
+set foldmethod=indent
+set foldlevel=1
 " }}}
 
 "   _____ _        _             _ _
@@ -483,8 +474,9 @@ vnoremap / /\v
 "  ____) | || (_| | |_| |_| \__ \ | | | | |  __/
 " |_____/ \__\__,_|\__|\__,_|___/_|_|_| |_|\___|
 " Statusline --------------------------------{{{
-highlight status_line_mode_color guifg='#ffffff' guibg='#B6ad9a' ctermfg=155 cterm=bold term=bold
-highlight status_line_arrow_color guifg='#B6ad9a' guibg='#3c322c' ctermfg=155 cterm=bold term=bold
+highlight status_line_mode_color guifg='#EEE8D5' guibg='#333333' ctermfg=155 cterm=bold term=bold
+highlight status_line_arrow_color guifg='#333333' guibg='#444444' ctermfg=155 cterm=bold term=bold
+highlight status_line_bg_color guifg='#EEE8D5' guibg='#444444' ctermfg=155 cterm=bold term=bold
 
 set statusline=%#status_line_mode_color#
 " Editing mode
@@ -498,19 +490,14 @@ set statusline+=\ %n\
 set statusline+=%#status_line_arrow_color#
 " Arrow
 set statusline+=
-" Colro
-set statusline+=%#Visual#
-" If paste mode is active
-set statusline+=%{&paste?'\ PASTE\ ':''}
-" If spell checking is active
-set statusline+=%{&spell?'\ SPELL\ ':''}
 " Color
-set statusline+=%#CursorIM#
+set statusline+=%#status_line_bg_color#
+" If paste mode is active
+set statusline+=%{&paste?'\ paste\ ':''}
+" If spell checking is active
+set statusline+=%{&spell?'\ spell\ ':''}
 " Read only flag
 set statusline+=%R
-" Color
-set statusline+=%#Cursor#
-set statusline+=%#CursorLine#
 " Short filename
 set statusline+=\ %t
 " Filetype (as detected) using &ft instead of %Y as a lowercase alternative
@@ -519,17 +506,14 @@ set statusline+=\ (%{&ft})
 set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
 " Symbol to show the file has been modified
 set statusline+=\ %{&modified?'✘\ ':'\ \ '}
-" Inactive Color
-set statusline+=%#CursorIM#
 " Right align
 set statusline+=%=
-" Color
-set statusline+=%#CursorLine#
 " current line of total line, current column of total columns
-set statusline+=\ ℓ\ %l\ ᵒᶠ\ %L\ 
+set statusline+=\ ℓ\ %l/%L\ ᶜ\ %c/%{virtcol('$')}
+" Color
 set statusline+=%#status_line_arrow_color#
 " Arrow
-set statusline+=
+set statusline+=\ 
 " Color
 set statusline+=%#status_line_mode_color#
 " Percent of file
