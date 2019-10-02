@@ -15,8 +15,13 @@ set nocompatible
 filetype off
 
 " set the runtime path to include Vundle and initialize
-set rtp+=$HOME/vimfiles/bundle/Vundle.vim
-let path='$HOME/vimfiles/bundle'
+if has('win32')
+  set rtp+=$HOME/vimfiles/bundle/Vundle.vim
+  let path='$HOME/vimfiles/bundle'
+else
+  set rtp+=$HOME/.vim/bundle/Vundle.vim
+  let path='$HOME/.vim/bundle'
+endif
 call vundle#begin(path)
 
 " let Vundle manage Vundle, required
@@ -171,8 +176,11 @@ set listchars+=trail:•                " BULLET (U+2022, UTF-8: E2 80 A2)
 "let g:airline#extensions#tabline#enabled=1
 
 " Set the directory for UltiSnips (setup by Vundle)
-let g:UltiSnipsSnippetsDir = "~/vimfiles/bundle/vim-snippets/UltiSnips"
-
+if has('win32')
+  let g:UltiSnipsSnippetsDir = "~/vimfiles/bundle/vim-snippets/UltiSnips"
+else
+  let g:UltiSnipsSnippetsDir = "~/.vim/bundle/vim-snippets/UltiSnips"
+endif
 if has('folding')
   if has('windows')
     set fillchars=vert:┃              " BOX DRAWINGS HEAVY VERTICAL (U+2503, UTF-8: E2 94 83)
