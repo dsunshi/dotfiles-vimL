@@ -148,9 +148,11 @@ set guioptions-=r  "remove right-hand scroll bar
 set guioptions-=L  "remove left-hand scroll bar
 
 " font selection
-"set guifont=DejaVuSansMono\ Nerd\ Font\ Mono:h10
-"set guifont=DejaVuSansMonoForPowerline\ Nerd:h10
-set guifont=Source\ Code\ Pro:h10
+if has('win32')
+  set guifont=Source\ Code\ Pro:h10
+else
+  set guifont=Source\ Code\ Pro\ 10
+endif
 
 " enable syntax highlighting
 syntax on
