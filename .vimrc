@@ -91,6 +91,9 @@ Plugin 'rust-lang/rust.vim'
 " Syntax checking
 Plugin 'vim-syntastic/syntastic'
 
+" startup
+Plugin 'mhinz/vim-startify'
+
 " all Plugins must be added before this line:
 call vundle#end()            " required
 filetype plugin indent on    " required
