@@ -478,6 +478,8 @@ let g:syntastic_check_on_wq = 0
 " reminder that folding exists
 set foldmethod=indent
 set foldlevel=1
+
+set lazyredraw                        " don't bother updating screen during macro playback
 " }}}
 
 "   _____ _        _             _ _
