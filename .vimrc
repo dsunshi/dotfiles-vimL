@@ -69,6 +69,9 @@ Plugin 'luochen1990/rainbow'
 
 " goyo focused editing
 Plugin 'junegunn/goyo.vim'
+" Peekaboo extends " and @ in normal mode and <CTRL-R> in insert mode so you
+" can see the contents of the registers.
+Plugin 'junegunn/vim-peekaboo'
 
 " color theme(s)
 Plugin 'NLKNguyen/papercolor-theme'
@@ -152,7 +155,12 @@ set guioptions-=L  "remove left-hand scroll bar
 
 " font selection
 if has('win32')
-  set guifont=Source\ Code\ Pro:h10
+  if has ('nvim')
+    " exec 'Guifont! Source Code Pro:h10'
+    " This must be in ginit.vim
+  else
+    set guifont=Source\ Code\ Pro:h10
+  endif
 else
   set guifont=Source\ Code\ Pro\ 10
 endif
@@ -450,7 +458,7 @@ au! BufNewFile,BufReadPost,BufEnter *.{c.re} set filetype=c
 
 " disable the mouse
 set mouse=
-set ttymouse=
+" set ttymouse=
 
 " close the current buffer without killing the split
 nnoremap <leader>d :b#<bar>bd#<CR>
@@ -478,6 +486,8 @@ let g:syntastic_check_on_wq = 0
 " reminder that folding exists
 set foldmethod=indent
 set foldlevel=1
+
+nnoremap <leader>n :silent! nohls<cr>
 
 set lazyredraw                        " don't bother updating screen during macro playback
 " }}}
