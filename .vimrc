@@ -92,7 +92,8 @@ Plugin 'sainnhe/vim-color-forest-night'
 Plugin 'rust-lang/rust.vim'
 
 " Syntax checking
-Plugin 'vim-syntastic/syntastic'
+" Plugin 'vim-syntastic/syntastic'
+Plugin 'dense-analysis/ale'
 
 " startup
 Plugin 'mhinz/vim-startify'
@@ -488,6 +489,10 @@ set foldmethod=indent
 set foldlevel=1
 
 nnoremap <leader>n :silent! nohls<cr>
+
+" Next ALE finding.
+nmap <silent> <M-n> :ALENext<cr>
+nmap <silent> <M-e> :ALEPrevious<cr>
 
 set lazyredraw                        " don't bother updating screen during macro playback
 " }}}
