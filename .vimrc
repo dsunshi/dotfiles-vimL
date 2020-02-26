@@ -8,106 +8,65 @@
 "                  __/ |
 "                 |___/
 " Plugins ----------------------{{{
-" be Improved - required for Vundle to disable vi compatibility (emulation of old bugs)
-set nocompatible
 
-" required for Vundle:
-filetype off
+" Not sure why but vim-plug was not happy without this, therefore here it is.
+set rtp+=$HOME/.vim
+let path='$HOME/.vim'
 
-" set the runtime path to include Vundle and initialize
-if has('win32')
-  set rtp+=$HOME/vimfiles/bundle/Vundle.vim
-  let path='$HOME/vimfiles/bundle'
-else
-  set rtp+=$HOME/.vim/bundle/Vundle.vim
-  let path='$HOME/.vim/bundle'
-endif
-call vundle#begin(path)
+" Start of vim-plug
+call plug#begin()
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+Plug 'SirVer/ultisnips'             " snippet tool
+Plug 'Valloric/YouCompleteMe'       " auto-complete
+Plug 'dense-analysis/ale'           " Syntax checking
+Plug 'ervandew/supertab'            " allows you to use <Tab> for all your insert completion needs
+Plug 'godlygeek/tabular'            " Tabular for aligning text
+Plug 'haya14busa/is.vim'            " Automatically clear search highlights after you move your cursor.
+Plug 'honza/vim-snippets'           " Snippets are separated from the engine.
+Plug 'junegunn/fzf.vim'             " fuzzy searching
+Plug 'junegunn/goyo.vim'            " goyo focused editing
+Plug 'junegunn/limelight.vim'       " Dim paragraphs above and below the active paragraph.
+Plug 'kana/vim-textobj-user'        " Custom text objects
+Plug 'luochen1990/rainbow'          " rainbow parenthesis
+Plug 'mhinz/vim-startify'           " startup
+Plug 'mileszs/ack.vim'              " silver searcher via ack
+Plug 'plasticboy/vim-markdown'      " markdown support
+Plug 'rust-lang/rust.vim'           " rust
+Plug 'tpope/vim-commentary'         " Comment stuff out.
+Plug 'tpope/vim-fugitive'           " git integration
+Plug 'tpope/vim-surround'           " easily modify surrounding pairs
+Plug 'tpope/vim-unimpaired'         " vim navigation
+Plug 'vim-scripts/argtextobj.vim'   " Function arguments as text objects
 
-" git integration
-Plugin 'tpope/vim-fugitive'
-
-" easily modify surrounding pairs
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-abolish'
-Plugin 'tpope/vim-unimpaired'
-
-" Comment stuff out. Use gcc to comment out a line (takes a count), gc to comment out the target of a motion
-Plugin 'tpope/vim-commentary'
-
-" Custom text objects
-Plugin 'kana/vim-textobj-user'
-" Function arguments as text objects
-Plugin 'vim-scripts/argtextobj.vim'
-" snippet tool
-" Track the engine.
-Plugin 'SirVer/ultisnips'
-
-" Snippets are separated from the engine.
-Plugin 'honza/vim-snippets'
-
-" Tabular for aligning text
-Plugin 'godlygeek/tabular'
-
-" allows you to use <Tab> for all your insert completion needs
-Plugin 'ervandew/supertab'
-
-" silver searcher via ack
-Plugin 'mileszs/ack.vim'
-
-" file explorer
-Plugin 'wincent/command-t'
-
-" auto-complete
-Plugin 'Valloric/YouCompleteMe'
-
-" rainbow parenthesis
-Plugin 'luochen1990/rainbow'
-
-" goyo focused editing
-Plugin 'junegunn/goyo.vim'
-" Peekaboo extends " and @ in normal mode and <CTRL-R> in insert mode so you
-" can see the contents of the registers.
-Plugin 'junegunn/vim-peekaboo'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
+Plug 'wincent/command-t', { 'do': 'cd ruby/command-t/ext/command-t && ruby extconf.rb && make'  }
 
 " color theme(s)
-Plugin 'NLKNguyen/papercolor-theme'
-Plugin 'rakr/vim-two-firewatch'
-Plugin 'AlessandroYorba/Sierra'
-Plugin 'sts10/vim-pink-moon'
-Plugin 'Nequo/vim-allomancer'
-Plugin 'koirand/tokyo-metro.vim'
-Plugin 'dennougorilla/azuki.vim'
-Plugin 'fcpg/vim-farout'
-Plugin 'nightsense/vim-crunchbang'
-Plugin 'sainnhe/gruvbox-material'
-Plugin 'arzg/vim-oldbook8'
-Plugin 'axvr/photon.vim'
-Plugin 'sainnhe/vim-color-forest-night'
-
-" rust
-Plugin 'rust-lang/rust.vim'
-
-" Syntax checking
-" Plugin 'vim-syntastic/syntastic'
-Plugin 'dense-analysis/ale'
-
-" startup
-Plugin 'mhinz/vim-startify'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'rakr/vim-two-firewatch'
+Plug 'AlessandroYorba/Sierra'
+Plug 'sts10/vim-pink-moon'
+Plug 'Nequo/vim-allomancer'
+Plug 'koirand/tokyo-metro.vim'
+Plug 'dennougorilla/azuki.vim'
+Plug 'fcpg/vim-farout'
+Plug 'nightsense/vim-crunchbang'
+Plug 'sainnhe/gruvbox-material'
+Plug 'arzg/vim-oldbook8'
+Plug 'axvr/photon.vim'
+Plug 'sainnhe/vim-color-forest-night'
 
 " all Plugins must be added before this line:
-call vundle#end()            " required
-filetype plugin indent on    " required
-
-" try to detect filetypes (restore setting after Vundle)
-filetype plugin on
+call plug#end()
 
 " file encoding - required for YouCompleteMe
 set encoding=utf-8
 " }}}
+
+if has('win32')
+  let g:python3_host_prog = 'C:\Python38\python.exe'
+  let g:python_host_prog = 'C:\Python27\python.exe'
+endif
 
 "     /\
 "    /  \   _ __  _ __   ___  __ _ _ __ __ _ _ __   ___ ___
@@ -118,17 +77,21 @@ set encoding=utf-8
 "          |_|   |_|
 " Appearance --------------------------------------------{{{
 
+" Presentation mode will enable a light color scheme
+" and it will increase the font size
+let g:presentation_mode = 0
+
 " set 256 colors
 set t_Co=256
 
 " set the colorscheme
-set background=dark
-colo sierra
-
-" firewatch
-" let g:two_firewatch_italics=1
-" colo two-firewatch
-"let g:airline_theme='twofirewatch'
+if g:presentation_mode == 0
+   set background=dark
+   colo sierra
+else
+   set background=light
+   colo PaperColor
+endif
 
 " show the ruler on the right side of the status line
 set ruler
@@ -158,11 +121,17 @@ set guioptions-=L  "remove left-hand scroll bar
 if has('win32')
   if has ('nvim')
     " exec 'Guifont! Source Code Pro:h10'
-    " This must be in ginit.vim
+    " This must be in ginit.vim for NeoVim
   else
-    set guifont=Source\ Code\ Pro:h10
+     " normal Vim
+      if g:presentation_mode == 1
+          set guifont=Source\ Code\ Pro:h18
+      else
+          set guifont=Source\ Code\ Pro:h10
+      endif
   endif
 else
+  " Linux Vim
   set guifont=Source\ Code\ Pro\ 10
 endif
 
@@ -176,24 +145,18 @@ set cursorline
 set showmatch
 
 " settings to display whitespace characters
-set list                              " show whitespace
-set listchars=nbsp:⦸                  " CIRCLED REVERSE SOLIDUS (U+29B8, UTF-8: E2 A6 B8)
-set listchars+=tab:┈┈                 " BOX DRAWINGS LIGHT QUADRUPLE DASH HORIZONTAL' (U+2508, UTF-8: E2 94 88)
-set listchars+=extends:»              " RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00BB, UTF-8: C2 BB)
-set listchars+=precedes:«             " LEFT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00AB, UTF-8: C2 AB)
-set listchars+=trail:•                " BULLET (U+2022, UTF-8: E2 80 A2)
+set list                   " show whitespace
+set listchars=nbsp:⦸       " CIRCLED REVERSE SOLIDUS (U+29B8, UTF-8: E2 A6 B8)
+set listchars+=tab:┈┈      " BOX DRAWINGS LIGHT QUADRUPLE DASH HORIZONTAL' (U+2508, UTF-8: E2 94 88)
+set listchars+=extends:»   " RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00BB, UTF-8: C2 BB)
+set listchars+=precedes:«  " LEFT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00AB, UTF-8: C2 AB)
+set listchars+=trail:•     " BULLET (U+2022, UTF-8: E2 80 A2)
 
-" vim-airline Theme
-"let g:airline_theme='base16'
-
-" automatically displays all buffers when there's only one tab open
-"let g:airline#extensions#tabline#enabled=1
-
-" Set the directory for UltiSnips (setup by Vundle)
+" Set the directory for UltiSnips
 if has('win32')
-  let g:UltiSnipsSnippetsDir = "~/vimfiles/bundle/vim-snippets/UltiSnips"
+  let g:UltiSnipsSnippetsDir = "~/vimfiles/plugged/vim-snippets/UltiSnips"
 else
-  let g:UltiSnipsSnippetsDir = "~/.vim/bundle/vim-snippets/UltiSnips"
+  let g:UltiSnipsSnippetsDir = "~/.vim/plugged/vim-snippets/UltiSnips"
 endif
 if has('folding')
   if has('windows')
@@ -227,11 +190,6 @@ let g:SuperTabDefaultCompletionType = '<C-n>'
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-
-" pressing Ctrl-L leaves insert mode in evim, so why not in regular vim, too
-" :inoremap <C-L> <Esc>
-
-inoremap <C-D> <Esc>d0s
 
 " pressing Ctrl-m will toggle relative numbering and the cursorline, this will prevent lag
 " when editing very large files
@@ -495,6 +453,13 @@ nmap <silent> <M-n> :ALENext<cr>
 nmap <silent> <M-e> :ALEPrevious<cr>
 
 set lazyredraw                        " don't bother updating screen during macro playback
+
+
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+
+let g:tex_indent_brace = 0 " Toggle smartindent-like style for {} and [].
+
 " }}}
 
 "   _____ _        _             _ _
