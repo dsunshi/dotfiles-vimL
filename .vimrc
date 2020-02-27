@@ -8,6 +8,7 @@
 "                  __/ |
 "                 |___/
 " Plugins ----------------------{{{
+set nocompatible
 
 " Not sure why but vim-plug was not happy without this, therefore here it is.
 set rtp+=$HOME/.vim
@@ -18,11 +19,13 @@ call plug#begin()
 
 Plug 'SirVer/ultisnips'             " snippet tool
 Plug 'Valloric/YouCompleteMe'       " auto-complete
+Plug 'amix/vim-zenroom2'            " emulates iA Writer environment when editing Markdown
+Plug 'camspiers/lens.vim'           " Automatic window resizing
 Plug 'dense-analysis/ale'           " Syntax checking
 Plug 'ervandew/supertab'            " allows you to use <Tab> for all your insert completion needs
 Plug 'godlygeek/tabular'            " Tabular for aligning text
 Plug 'haya14busa/is.vim'            " Automatically clear search highlights after you move your cursor.
-Plug 'honza/vim-snippets'           " Snippets are separated from the engine.
+" Plug 'honza/vim-snippets'           " Snippets are separated from the engine.
 Plug 'junegunn/fzf.vim'             " fuzzy searching
 Plug 'junegunn/goyo.vim'            " goyo focused editing
 Plug 'junegunn/limelight.vim'       " Dim paragraphs above and below the active paragraph.
@@ -67,6 +70,19 @@ if has('win32')
   let g:python3_host_prog = 'C:\Python38\python.exe'
   let g:python_host_prog = 'C:\Python27\python.exe'
 endif
+
+"  _____  _             _          _____      _   _   _
+" |  __ \| |           (_)        / ____|    | | | | (_)
+" | |__) | |_   _  __ _ _ _ __   | (___   ___| |_| |_ _ _ __   __ _ ___
+" |  ___/| | | | |/ _` | | '_ \   \___ \ / _ \ __| __| | '_ \ / _` / __|
+" | |    | | |_| | (_| | | | | |  ____) |  __/ |_| |_| | | | | (_| \__ \
+" |_|    |_|\__,_|\__, |_|_| |_| |_____/ \___|\__|\__|_|_| |_|\__, |___/
+"                  __/ |                                       __/ |
+"                 |___/                                       |___/
+"  Plugin Settings-----------------------------------------------------{{{
+
+let g:mkdp_markdown_css='~/.vim/markdown/github-markdown.css'
+"}}}
 
 "     /\
 "    /  \   _ __  _ __   ___  __ _ _ __ __ _ _ __   ___ ___
@@ -153,11 +169,11 @@ set listchars+=precedes:«  " LEFT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00AB,
 set listchars+=trail:•     " BULLET (U+2022, UTF-8: E2 80 A2)
 
 " Set the directory for UltiSnips
-if has('win32')
-  let g:UltiSnipsSnippetsDir = "~/vimfiles/plugged/vim-snippets/UltiSnips"
-else
-  let g:UltiSnipsSnippetsDir = "~/.vim/plugged/vim-snippets/UltiSnips"
-endif
+" if has('win32')
+"   let g:UltiSnipsSnippetsDir = "~/vimfiles/my-snips"
+" else
+"   let g:UltiSnipsSnippetsDir = "~/.vim/my-snips"
+" endif
 if has('folding')
   if has('windows')
     set fillchars=vert:┃              " BOX DRAWINGS HEAVY VERTICAL (U+2503, UTF-8: E2 94 83)
@@ -284,13 +300,13 @@ endfunction
 function! ToogleTexUmlauts()
     if g:auto_umlaut
         echo "Quick entry for umlauts (and ß) ENABLED!"
-        inoremap ae {\\"a}
-        inoremap oe {\\"o}
-        inoremap ue {\\"u}
-        inoremap ss {\\s}
-        inoremap Ae {\\"A}
-        inoremap Oe {\\"O}
-        inoremap Ue {\\"U}
+        inoremap ae {\"a}
+        inoremap oe {\"o}
+        inoremap ue {\"u}
+        inoremap ss {\s}
+        inoremap Ae {\"A}
+        inoremap Oe {\"O}
+        inoremap Ue {\"U}
         let g:auto_umlaut = 0
     else
         echo "Quick entry for umlauts (and ß) DISABLED!"
