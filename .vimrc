@@ -40,9 +40,10 @@ Plug 'tpope/vim-fugitive'           " git integration
 Plug 'tpope/vim-surround'           " easily modify surrounding pairs
 Plug 'tpope/vim-unimpaired'         " vim navigation
 Plug 'vim-scripts/argtextobj.vim'   " Function arguments as text objects
+Plug 'mzlogin/vim-markdown-toc'     " Generate Markdown TOC automatically
 
+Plug 'junegunn/fzf', { 'do': './install --bin' }
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
-Plug 'wincent/command-t', { 'do': 'cd ruby/command-t/ext/command-t && ruby extconf.rb && make'  }
 
 " color theme(s)
 Plug 'NLKNguyen/papercolor-theme'
@@ -81,7 +82,32 @@ endif
 "                 |___/                                       |___/
 "  Plugin Settings-----------------------------------------------------{{{
 
+" When using :MarkdownPreview use GitHub CSS for better style
 let g:mkdp_markdown_css='~/.vim/markdown/github-markdown.css'
+
+" Enable a preview window for fzf when searching
+if has('win32')
+command! -bang -nargs=? -complete=dir Files
+    \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview', 'cat {}']}, <bang>0)
+else
+command! -bang -nargs=? -complete=dir Files
+    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
+endif
+
+" disable preview window for you complete me
+let g:SuperTabClosePreviewOnPopupClose = 1
+
+let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_autoclose_preview_window_after_completion = 1
+
+" enable it later via :RainbowToggle
+let g:rainbow_active = 0
+
+" use ag with ack.vim instead of grep or ack
+if executable('ag')
+    let g:ackprg = 'ag --vimgrep'
+endif
+
 "}}}
 
 "     /\
@@ -168,12 +194,7 @@ set listchars+=extends:»   " RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00BB
 set listchars+=precedes:«  " LEFT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00AB, UTF-8: C2 AB)
 set listchars+=trail:•     " BULLET (U+2022, UTF-8: E2 80 A2)
 
-" Set the directory for UltiSnips
-" if has('win32')
-"   let g:UltiSnipsSnippetsDir = "~/vimfiles/my-snips"
-" else
-"   let g:UltiSnipsSnippetsDir = "~/.vim/my-snips"
-" endif
+" appearnce of folding
 if has('folding')
   if has('windows')
     set fillchars=vert:┃              " BOX DRAWINGS HEAVY VERTICAL (U+2503, UTF-8: E2 94 83)
@@ -207,7 +228,7 @@ let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
-" pressing Ctrl-m will toggle relative numbering and the cursorline, this will prevent lag
+" toggle relative numbering and the cursorline, this might prevent lag
 " when editing very large files
 noremap <leader>rel :set relativenumber!<CR>:set cursorline!<CR>
 
@@ -222,6 +243,29 @@ nnoremap <leader>ue :UltiSnipsEdit<cr>
 " toggle umlaut feature (faster German typing)
 nnoremap <leader>de :call ToogleUmlauts()<CR>
 nnoremap <leader>det :call ToogleTexUmlauts()<CR>
+
+nnoremap <leader>b :Buffers<CR>
+nnoremap <leader>f :Files<CR>
+
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
+
+nnoremap <leader>d :bd<CR>
+
+nnoremap <leader>ag :Ack!<Space>
+
+nnoremap <leader>n :silent! nohls<cr>
+
+" Next ALE finding.
+nmap <silent> <M-n> :ALENext<cr>
+nmap <silent> <M-e> :ALEPrevious<cr>
+
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+
+" very magic searching
+nnoremap / /\v
+vnoremap / /\v
 " }}}
 
 "   ____        _   _
@@ -259,6 +303,14 @@ autocmd FileType * let b:browsefilter = ''
 
 " start scrolling 3 lines before edge of viewport
 set scrolloff=3
+
+set wildignore=*.o,*.a,*.pyc,*.swp,.git,.git/*,*.exe
+
+" don't bother updating screen during macro playback
+set lazyredraw
+
+" disable the mouse
+set mouse=
 " }}}
 
 "  ______                _   _
@@ -330,95 +382,7 @@ endfunction
 " /_/    \_\__,_|\__\___/   \_____\___/|_| |_| |_|_| |_| |_|\__,_|_| |_|\__,_|___/
 "
 " Auto Commands -----------------------------------------------------------{{{
-"
-" Stolen from Greg Hurrell
-" Vim screencast #48: Even better focus
-" https://github.com/wincent/wincent
-
-if has('autocmd')
-  function! s:WincentAutocmds()
-    augroup WincentAutocmds
-      autocmd!
-
-      " If Vim is rezided, then even out any splits
-      autocmd VimResized * execute "normal! \<c-w>="
-
-      " http://vim.wikia.com/wiki/Detect_window_creation_with_WinEnter
-      autocmd VimEnter * autocmd WinEnter * let w:created=1
-      autocmd VimEnter * let w:created=1
-
-      " Disable syntax highlighting in a split without focus
-      autocmd BufEnter,FocusGained,VimEnter,WinEnter * call s:focus_window()
-      autocmd FocusLost,WinLeave * call s:blur_window()
-    augroup END
-  endfunction
-
-  call s:WincentAutocmds()
-
-  " Buffers that should alwyas have syntax highlighting
-  let g:WincentColorColumnBlacklist = ['diff', 'fugitiveblame', 'undotree', 'nerdtree', 'qf']
-
-  function! s:should_colorcolumn() abort
-    return index(g:WincentColorColumnBlacklist, &filetype) == -1
-  endfunction
-
-  function! s:blur_window() abort
-    if s:should_colorcolumn()
-      let l:settings=s:get_spell_settings()
-      "ownsyntax off
-      " clear text highlighting beyond the set column
-      call clearmatches()
-      call s:set_spell_settings(l:settings)
-    endif
-  endfunction
-
-  function! s:focus_window() abort
-    if s:should_colorcolumn()
-      if !empty(&ft)
-        let l:settings=s:get_spell_settings()
-        " This is something of a hack. I believe it should be just: 'ownsyntax &ft' but that does not work...
-        "execute 'ownsyntax ' . &ft
-        " highlight text beyond the specified column
-"        let w:m2=matchadd('ErrorMsg','\%>120v.\+',-1)
-        call s:set_spell_settings(l:settings)
-      endif
-    endif
-  endfunction
-
-  function! s:get_spell_settings() abort
-    return {
-          \   'spell': &l:spell,
-          \   'spellcapcheck': &l:spellcapcheck,
-          \   'spellfile': &l:spellfile,
-          \   'spelllang': &l:spelllang
-          \ }
-  endfunction
-
-  function! s:set_spell_settings(settings) abort
-    let &l:spell=a:settings.spell
-    let &l:spellcapcheck=a:settings.spellcapcheck
-    let &l:spellfile=a:settings.spellfile
-    let &l:spelllang=a:settings.spelllang
-  endfunction
-endif
 " }}}
-
-"   _____                _       _                     _
-"  / ____|              | |     | |                   | |
-" | (___   ___ _ __ __ _| |_ ___| |__  _ __   __ _  __| |
-"  \___ \ / __| '__/ _` | __/ __| '_ \| '_ \ / _` |/ _` |
-"  ____) | (__| | | (_| | || (__| | | | |_) | (_| | (_| |
-" |_____/ \___|_|  \__,_|\__\___|_| |_| .__/ \__,_|\__,_|
-"                                     | |
-"                                     |_|
-" Scratchpad -----------------------------------------{{{
-let g:SuperTabClosePreviewOnPopupClose = 1
-
-let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_autoclose_preview_window_after_completion = 1
-
-:nnoremap <leader>ev :vsplit $MYVIMRC<cr>
-:nnoremap <leader>sv :source $MYVIMRC<cr>
 
 augroup filetype_vim
     autocmd!
@@ -431,50 +395,17 @@ autocmd FileType tex setlocal ff=unix
 
 au! BufNewFile,BufReadPost,BufEnter *.{c.re} set filetype=c
 
-" disable the mouse
-set mouse=
-" set ttymouse=
-
-" close the current buffer without killing the split
-nnoremap <leader>d :b#<bar>bd#<CR>
-
-" enable it later via :RainbowToggle
-let g:rainbow_active = 0
-
-if executable('ag')
-    let g:ackprg = 'ag --vimgrep'
-endif
-
-:nnoremap <leader>ag :Ack!<Space>
-
-set wildignore=*.o,*.a,*.pyc,*.swp,.git,.git/*,*.exe
-
-" very magic searching
-nnoremap / /\v
-vnoremap / /\v
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-
-" reminder that folding exists
-set foldmethod=indent
-set foldlevel=1
-
-nnoremap <leader>n :silent! nohls<cr>
-
-" Next ALE finding.
-nmap <silent> <M-n> :ALENext<cr>
-nmap <silent> <M-e> :ALEPrevious<cr>
-
-set lazyredraw                        " don't bother updating screen during macro playback
+"   _____                _       _                     _
+"  / ____|              | |     | |                   | |
+" | (___   ___ _ __ __ _| |_ ___| |__  _ __   __ _  __| |
+"  \___ \ / __| '__/ _` | __/ __| '_ \| '_ \ / _` |/ _` |
+"  ____) | (__| | | (_| | || (__| | | | |_) | (_| | (_| |
+" |_____/ \___|_|  \__,_|\__\___|_| |_| .__/ \__,_|\__,_|
+"                                     | |
+"                                     |_|
+" Scratchpad -----------------------------------------{{{
 
 
-nnoremap <A-j> :m .+1<CR>==
-nnoremap <A-k> :m .-2<CR>==
-
-let g:tex_indent_brace = 0 " Toggle smartindent-like style for {} and [].
 
 " }}}
 
