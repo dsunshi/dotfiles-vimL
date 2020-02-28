@@ -1,4 +1,4 @@
-
+" vim: fdm=marker foldlevel=0
 "  _____  _             _
 " |  __ \| |           (_)
 " | |__) | |_   _  __ _ _ _ __  ___
@@ -66,11 +66,6 @@ call plug#end()
 " file encoding - required for YouCompleteMe
 set encoding=utf-8
 " }}}
-
-if has('win32')
-  let g:python3_host_prog = 'C:\Python38\python.exe'
-  let g:python_host_prog = 'C:\Python27\python.exe'
-endif
 
 "  _____  _             _          _____      _   _   _
 " |  __ \| |           (_)        / ____|    | | | | (_)
@@ -311,6 +306,12 @@ set lazyredraw
 
 " disable the mouse
 set mouse=
+
+" location of python
+if has('win32')
+  let g:python3_host_prog = 'C:\Python38\python.exe'
+  let g:python_host_prog = 'C:\Python27\python.exe'
+endif
 " }}}
 
 "  ______                _   _
@@ -382,7 +383,6 @@ endfunction
 " /_/    \_\__,_|\__\___/   \_____\___/|_| |_| |_|_| |_| |_|\__,_|_| |_|\__,_|___/
 "
 " Auto Commands -----------------------------------------------------------{{{
-" }}}
 
 augroup filetype_vim
     autocmd!
@@ -394,6 +394,8 @@ au! BufNewFile,BufReadPost,BufEnter *.{latex,tex,tex.tpl} set filetype=tex foldm
 autocmd FileType tex setlocal ff=unix
 
 au! BufNewFile,BufReadPost,BufEnter *.{c.re} set filetype=c
+
+" }}}
 
 "   _____                _       _                     _
 "  / ____|              | |     | |                   | |
