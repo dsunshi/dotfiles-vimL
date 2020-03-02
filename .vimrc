@@ -10,15 +10,17 @@
 " Plugins ----------------------{{{
 set nocompatible
 
-" Not sure why but vim-plug was not happy without this, therefore here it is.
+" Force windows Vim to use .vim instead of vimfiles
+if has('win32') || has('win64')
+set runtimepath-=~/vimfiles
 set rtp+=$HOME/.vim
 let path='$HOME/.vim'
+endif
 
 " Start of vim-plug
-call plug#begin()
+call plug#begin('~/.vim/plugged')
 
 Plug 'SirVer/ultisnips'             " snippet tool
-Plug 'Valloric/YouCompleteMe'       " auto-complete
 Plug 'amix/vim-zenroom2'            " emulates iA Writer environment when editing Markdown
 Plug 'camspiers/lens.vim'           " Automatic window resizing
 Plug 'dense-analysis/ale'           " Syntax checking
