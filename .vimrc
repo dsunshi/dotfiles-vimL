@@ -275,20 +275,32 @@ vnoremap / /\v
 " vertically split ultisnips edit window
 let g:UltiSnipsEditSplit="vertical"
 
+" --- Indentation Options {{{
 " a tab is the width of 4 spaces
-set tabstop=3
+set tabstop=4
 
 " when auto-indenting use 4 spaces (default is 8?)
-set shiftwidth=3
+set shiftwidth=4
 
 " expand tabs into spaces
 set expandtab
 
+" --- Indetation Options }}}
+
+" --- Serarching Options {{{
 " Enable incremental searching
 set incsearch
 
 " Highlight all items found by searching
 set hlsearch
+
+" ignore case when searching
+set ignorecase
+
+" automatically switch rearch to case-sensitive when the query contains an
+" upper case letter
+set smartcase
+" --- Serarching Options }}}
 
 " backspace removes all (indents, EOLs, start)
 set backspace=indent,eol,start
@@ -301,11 +313,26 @@ set scrolloff=3
 
 set wildignore=*.o,*.a,*.pyc,*.swp,.git,.git/*,*.exe
 
+" --- Performance Options {{{
 " don't bother updating screen during macro playback
 set lazyredraw
 
+" --- Performance Options }}}
+
+" --- UI Options {{{
 " disable the mouse
 set mouse=
+
+" disable beep on errors
+set noerrorbells
+
+" enable visual bell
+set visualbell
+
+" clear the visual bell
+set t_vb=
+
+" --- UI Options }}}
 
 " location of python
 if has('win32')
@@ -397,20 +424,6 @@ au! BufNewFile,BufReadPost,BufEnter *.{c.re} set filetype=c
 
 " }}}
 
-"   _____                _       _                     _
-"  / ____|              | |     | |                   | |
-" | (___   ___ _ __ __ _| |_ ___| |__  _ __   __ _  __| |
-"  \___ \ / __| '__/ _` | __/ __| '_ \| '_ \ / _` |/ _` |
-"  ____) | (__| | | (_| | || (__| | | | |_) | (_| | (_| |
-" |_____/ \___|_|  \__,_|\__\___|_| |_| .__/ \__,_|\__,_|
-"                                     | |
-"                                     |_|
-" Scratchpad -----------------------------------------{{{
-
-
-
-" }}}
-
 "   _____ _        _             _ _
 "  / ____| |      | |           | (_)
 " | (___ | |_ __ _| |_ _   _ ___| |_ _ __   ___
@@ -462,4 +475,36 @@ set statusline+=\ 
 set statusline+=%#status_line_mode_color#
 " Percent of file
 set statusline+=\ %3p%%\ 
+" }}}
+
+
+"   _____                _       _                     _
+"  / ____|              | |     | |                   | |
+" | (___   ___ _ __ __ _| |_ ___| |__  _ __   __ _  __| |
+"  \___ \ / __| '__/ _` | __/ __| '_ \| '_ \ / _` |/ _` |
+"  ____) | (__| | | (_| | || (__| | | | |_) | (_| | (_| |
+" |_____/ \___|_|  \__,_|\__\___|_| |_| .__/ \__,_|\__,_|
+"                                     | |
+"                                     |_|
+" Scratchpad -----------------------------------------{{{
+
+" new lines inherig the identation of previous lines
+set autoindent
+
+" when schiting line, round the indentatio to the nearest multiple of
+" "shiftwidth"
+set shiftround
+
+" insert "tabstop" number of spacer whin the "tab" key is pressed
+set smarttab
+
+" limit the files searched for auto-complete
+set complete-=i
+
+" always try to show a paragrah's last line
+set display+=lastline
+
+" delete comment character when joining lines
+set formatoptions+=j
+
 " }}}
