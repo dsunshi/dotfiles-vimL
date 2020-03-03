@@ -21,6 +21,7 @@ endif
 call plug#begin('~/.vim/plugged')
 
 Plug 'SirVer/ultisnips'             " snippet tool
+Plug 'Valloric/YouCompleteMe'       " auto-complete
 Plug 'amix/vim-zenroom2'            " emulates iA Writer environment when editing Markdown
 Plug 'camspiers/lens.vim'           " Automatic window resizing
 Plug 'dense-analysis/ale'           " Syntax checking
