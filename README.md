@@ -1,8 +1,13 @@
-# Vim Documentation
+# Vim Configuration
 <!-- vim-markdown-toc GFM -->
 
 * [External Dependencies](#external-dependencies)
 * [Initial Configuration](#initial-configuration)
+    * [YouCompleteMe](#youcompleteme)
+        * [Installation of c/c++ support](#installation-of-cc-support)
+        * [Faster regex engine](#faster-regex-engine)
+        * [Javascript/typescript](#javascripttypescript)
+        * [Rust](#rust)
 * [Environment Settings](#environment-settings)
     * [GitHub styled Markdown](#github-styled-markdown)
 * [Mappings](#mappings)
@@ -11,11 +16,6 @@
     * [Ultisnips](#ultisnips)
         * [Options](#options)
     * [fzf](#fzf)
-    * [YouCompleteMe](#youcompleteme)
-        * [Installation of c/c++ support](#installation-of-cc-support)
-        * [Faster regex engine](#faster-regex-engine)
-        * [Javascript/typescript](#javascripttypescript)
-        * [Rust](#rust)
 
 <!-- vim-markdown-toc -->
 ## External Dependencies
@@ -56,9 +56,55 @@ curl -fLo ~/.vim/autoload/plug.vim -x <[protocol://][user:password@]proxyhost[:p
 
 Once plug has been downloaded, you can simply run `:PlugInstall` from within Vim.
 
+### YouCompleteMe
+
+This example is specific for the additional support of c/c++, rust, and javascript and is meant
+to supplement the full guide found [here]( https://github.com/ycm-core/YouCompleteMe#full-installation-guide).
+
+#### Installation of c/c++ support
+
+```bash
+cd ~
+mkdir ycm_build
+cd ycm_build
+cmake -G "Visual Studio 15 Win64" -DPATH_TO_LLVM_ROOT=C:\LLVM . ~/.vim/plugged/YouCompleteMe/third_party/ycmd/cpp
+cmake --build . --target ycm_core --config Release
+```
+**Note 1:** The `-G` argument "Visual Studio 15 Win64" is for Visual Studio 2019 on a 64-bit machine.
+
+**Note 2:** The `-DPATH_TO_LLVM_ROOT` is the path given to install libclang.
+
+#### Faster regex engine
+```bash
+cd ~
+mkdir regex_build
+cd regex_build
+cmake -G "Visual Studio 15 Win64" . ~/.vim/plugged/YouCompleteMe/third_party/ycmd/third_party/cregex 
+cmake --build . --target _regex --config Release
+```
+
+#### Javascript/typescript
+```bash
+cd ~/.vim/plugged/YouCompleteMe/third_party/ycmd
+npm install -g --prefix third_party/tsserver typescript
+```
+
+#### Rust
+```bash
+cd ~
+mkdir rustup_home_temp
+set RUSTUP_HOME=~/rustup_home_temp
+rustup toolchain install nightly
+rustup default nightly
+rustup component add rls rust-analysis rust-src
+```
+* Ensure that `~/.vim/plugged/YouCompleteMe/third_party/ycmd/third_party/rls` directory exists and is empty.
+* Go into the `~/rustup_home_temp` and then into `toolchains/<toolchain>`.
+* Finally, move everything from that directory to  `~/.vim/plugged/YouCompleteMe/third_party/ycmd/third_party/rls`.
+
 ## Environment Settings
 
-In order to use ag and fzf together we have to tell fzf that ag is available. For linux:
+In order to use ag and fzf together you have to tell fzf that ag is available. For linux:
 ```bash
 # Place in ~./bashrc
 if type ag &> /dev/null; then
@@ -73,7 +119,7 @@ automatically ignore .git related content.
 
 ### GitHub styled Markdown
 
-To achieve a more stylish markdown we will take the CSS style from GitHub:
+To achieve a more stylish markdown you will need to download the CSS style from GitHub:
 ```bash
 curl -fLo ~/vimfiles/markdown/github-markdown.css \
    --create-dirs https://raw.githubusercontent.com/sindresorhus/github-markdown-css/gh-pages/github-markdown.css
@@ -138,50 +184,4 @@ To open a selected file:
 * <kbd>CTRL</kbd>+<kbd>V</kbd>: open file in new vertical window
 
 To close the file search, use either <kbd>ESC</kbd> or <kbd>CTRL</kbd>+<kbd>C</kbd>
-
-### YouCompleteMe
-
-This example is specific for the additional support of c/c++, rust, and javascript and is meant
-to supplement the full guide found [here]( https://github.com/ycm-core/YouCompleteMe#full-installation-guide).
-
-#### Installation of c/c++ support
-
-```bash
-cd ~
-mkdir ycm_build
-cd ycm_build
-cmake -G "Visual Studio 15 Win64" -DPATH_TO_LLVM_ROOT=C:\LLVM . ~/.vim/plugged/YouCompleteMe/third_party/ycmd/cpp
-cmake --build . --target ycm_core --config Release
-```
-**Note 1:** The `-G` argument "Visual Studio 15 Win64" is for Visual Studio 2019 on a 64-bit machine.
-
-**Note 2:** The `-DPATH_TO_LLVM_ROOT` is the path given to install libclang.
-
-#### Faster regex engine
-```bash
-cd ~
-mkdir regex_build
-cd regex_build
-cmake -G "Visual Studio 15 Win64" . ~/.vim/plugged/YouCompleteMe/third_party/ycmd/third_party/cregex 
-cmake --build . --target _regex --config Release
-```
-
-#### Javascript/typescript
-```bash
-cd ~/.vim/plugged/YouCompleteMe/third_party/ycmd
-npm install -g --prefix third_party/tsserver typescript
-```
-
-#### Rust
-```bash
-cd ~
-mkdir rustup_home_temp
-set RUSTUP_HOME=~/rustup_home_temp
-rustup toolchain install nightly
-rustup default nightly
-rustup component add rls rust-analysis rust-src
-```
-* Ensure that `~/.vim/plugged/YouCompleteMe/third_party/ycmd/third_party/rls` directory exists and is empty.
-* Go into the `~/rustup_home_temp` and then into `toolchains/<toolchain>`.
-* Finally, move everything from that directory to  `~/.vim/plugged/YouCompleteMe/third_party/ycmd/third_party/rls`.
 
