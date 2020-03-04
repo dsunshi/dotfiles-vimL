@@ -329,11 +329,8 @@ set mouse=
 " disable beep on errors
 set noerrorbells
 
-" enable visual bell
+" enable visual bell, this will be disabled later with autocommands
 set visualbell
-
-" clear the visual bell
-set t_vb=
 
 " --- UI Options }}}
 
@@ -413,6 +410,10 @@ endfunction
 " /_/    \_\__,_|\__\___/   \_____\___/|_| |_| |_|_| |_| |_|\__,_|_| |_|\__,_|___/
 "
 " Auto Commands -----------------------------------------------------------{{{
+
+" Disable the visual bell for both Vim and gVim
+autocmd GUIEnter * set vb t_vb= " for your GUI
+autocmd VimEnter * set vb t_vb=
 
 augroup filetype_vim
     autocmd!
