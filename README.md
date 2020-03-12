@@ -73,7 +73,13 @@ cd ycm_build
 cmake -G "Visual Studio 15 Win64" -DPATH_TO_LLVM_ROOT=C:\LLVM . ~/.vim/plugged/YouCompleteMe/third_party/ycmd/cpp
 cmake --build . --target ycm_core --config Release
 ```
+
 **Note 1:** The `-G` argument "Visual Studio 15 Win64" is for Visual Studio 2017 on a 64-bit machine.
+
+Another example using Visual Studio Studio 2019 on a 64-bit machine:
+```bash
+cmake -G "Visual Studio 16" -A"x64"  -DPATH_TO_LLVM_ROOT=C:\LLVM . %userprofile%/.vim/plugged/YouCompleteMe/third_party/ycmd/cpp
+```
 
 **Note 2:** The `-DPATH_TO_LLVM_ROOT` is the path given to install libclang.
 
