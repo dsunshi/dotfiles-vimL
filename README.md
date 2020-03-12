@@ -20,7 +20,7 @@
 <!-- vim-markdown-toc -->
 ## External Dependencies
 
-These tools must exist in the user's PATH:
+These tools must exist in the user's `PATH`:
 * [curl](https://curl.haxx.se/download.html)
 * [yarn](https://yarnpkg.com/getting-started/install)
 * [nodejs](https://nodejs.org/en/download/)
@@ -34,8 +34,11 @@ These tools must exist in the user's PATH:
 * [cmake](https://cmake.org/download/)
 * C compiler, e.g. Visual Studio or gcc
 
-**Note for Python**: The python version **must** match the version used do compile Vim. You can
+**Note 1 for Python**: The python version **must** match the version used do compile Vim. You can
 find out what version Vim is using by running `:version`.
+
+**Note 2 for Python**: The 32 or 64 bit versions of python **and** Vim **must match**. 64 bit Vim,
+will **not** work with 32 bit python. Just as 32 bit Vim does not work with 64 bit python.
 
 ## Initial Configuration
 
@@ -70,7 +73,7 @@ cd ycm_build
 cmake -G "Visual Studio 15 Win64" -DPATH_TO_LLVM_ROOT=C:\LLVM . ~/.vim/plugged/YouCompleteMe/third_party/ycmd/cpp
 cmake --build . --target ycm_core --config Release
 ```
-**Note 1:** The `-G` argument "Visual Studio 15 Win64" is for Visual Studio 2019 on a 64-bit machine.
+**Note 1:** The `-G` argument "Visual Studio 15 Win64" is for Visual Studio 2017 on a 64-bit machine.
 
 **Note 2:** The `-DPATH_TO_LLVM_ROOT` is the path given to install libclang.
 
