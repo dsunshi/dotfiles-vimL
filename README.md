@@ -1,26 +1,5 @@
 # Vim Configuration
 <!-- vim-markdown-toc GFM -->
-
-* [External Dependencies](#external-dependencies)
-* [Initial Configuration](#initial-configuration)
-* [Neovim](#neovim)
-* [Neovide](#neovide)
-        * [Dependencies](#dependencies)
-    * [YouCompleteMe](#youcompleteme)
-        * [Installation of c/c++ support](#installation-of-cc-support)
-        * [Faster regex engine](#faster-regex-engine)
-        * [Javascript/typescript](#javascripttypescript)
-        * [Rust](#rust)
-* [Environment Settings](#environment-settings)
-    * [GitHub styled Markdown](#github-styled-markdown)
-* [Mappings](#mappings)
-    * [Leader Key Mappings](#leader-key-mappings)
-* [Plugins](#plugins)
-    * [Ultisnips](#ultisnips)
-        * [Options](#options)
-    * [fzf](#fzf)
-
-<!-- vim-markdown-toc -->
 ## External Dependencies
 
 These tools must exist in the user's `PATH`:
@@ -76,6 +55,9 @@ All it does it point to the normal `~/.vim` so both programs can be used.
 
 To set this up simply place `init.vim` in `~/.config/nvim/init.vim` for linux or for windows here:
 `%userprofile%\AppData\Local\nvim\init.vim`.
+
+**Note** For the GUI version of Neovim the `ginit.vim` has to be placed in
+the same folder as `init.vim`.
 
 ## Neovide
 
@@ -214,3 +196,24 @@ To open a selected file:
 
 To close the file search, use either <kbd>ESC</kbd> or <kbd>CTRL</kbd>+<kbd>C</kbd>
 
+
+* [External Dependencies](#external-dependencies)
+* [Initial Configuration](#initial-configuration)
+* [Neovim](#neovim)
+* [Neovide](#neovide)
+        * [Dependencies](#dependencies)
+    * [YouCompleteMe](#youcompleteme)
+        * [Installation of c/c++ support](#installation-of-cc-support)
+        * [Faster regex engine](#faster-regex-engine)
+        * [Javascript/typescript](#javascripttypescript)
+        * [Rust](#rust)
+* [Environment Settings](#environment-settings)
+    * [GitHub styled Markdown](#github-styled-markdown)
+* [Mappings](#mappings)
+    * [Leader Key Mappings](#leader-key-mappings)
+* [Plugins](#plugins)
+    * [Ultisnips](#ultisnips)
+        * [Options](#options)
+    * [fzf](#fzf)
+
+<!-- vim-markdown-toc -->
