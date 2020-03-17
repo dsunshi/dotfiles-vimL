@@ -3,6 +3,9 @@
 
 * [External Dependencies](#external-dependencies)
 * [Initial Configuration](#initial-configuration)
+* [Neovim](#neovim)
+* [Neovide](#neovide)
+        * [Dependencies](#dependencies)
     * [YouCompleteMe](#youcompleteme)
         * [Installation of c/c++ support](#installation-of-cc-support)
         * [Faster regex engine](#faster-regex-engine)
@@ -59,10 +62,35 @@ curl -fLo ~/.vim/autoload/plug.vim -x <[protocol://][user:password@]proxyhost[:p
 
 Once plug has been downloaded, you can simply run `:PlugInstall` from within Vim.
 
+## Neovim
+
+<https://neovim.io/>
+
+Neovim describes itself as "Neovim is a refactor, and sometimes redactor, in the tradition of Vim
+(which itself derives from Stevie). It is not a rewrite but a continuation and extension of Vim.
+Many clones and derivatives exist, some very clever—but none are Vim.
+Neovim is built for users who want the good parts of Vim, and more."
+
+In order to try Neovim while still using the "regular" Vim, the Neovim `init.vim` is included here.
+All it does it point to the normal `~/.vim` so both programs can be used.
+
+To set this up simply place `init.vim` in `~/.config/nvim/init.vim` for linux or for windows here:
+`%userprofile%\AppData\Local\nvim\init.vim`.
+
+## Neovide
+
+<https://github.com/Kethku/neovide>
+
+Since I am personnaly a fan of Rust this seemed like an interesting GUI to Neovim.
+
+#### Dependencies
+* Neovide requires neovim version 0.4 or greater.
+* Vulkan Runtime, not the full SDK from: [Vulkan SDK](https://vulkan.lunarg.com/sdk/home)
+
 ### YouCompleteMe
 
 This example is specific for the additional support of c/c++, rust, and javascript and is meant
-to supplement the full guide found [here]( https://github.com/ycm-core/YouCompleteMe#full-installation-guide).
+to supplement the full guide found [here](https://github.com/ycm-core/YouCompleteMe#full-installation-guide).
 
 #### Installation of c/c++ support
 
@@ -132,8 +160,6 @@ or again, if you are behind a proxy:
 curl -fLo ~/vimfiles/markdown/github-markdown.css -x <[protocol://][user:password@]proxyhost[:port]> \
    --create-dirs https://raw.githubusercontent.com/sindresorhus/github-markdown-css/gh-pages/github-markdown.css
 ```
-
-After `vim-plug` has been installed simply run `:PlugInstall` from inside Vim.
 
 ## Mappings
 
