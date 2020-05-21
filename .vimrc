@@ -43,9 +43,12 @@ Plug 'tpope/vim-fugitive'           " git integration
 Plug 'tpope/vim-surround'           " easily modify surrounding pairs
 Plug 'tpope/vim-unimpaired'         " vim navigation
 Plug 'tpope/vim-repeat'             " enable better repeating
+Plug 'tpope/vim-abolish'            " Convert to/from CamelCase crs and crc
 Plug 'vim-scripts/argtextobj.vim'   " Function arguments as text objects
 Plug 'mzlogin/vim-markdown-toc'     " Generate Markdown TOC automatically
 Plug 'thinca/vim-quickrun'          " Quickly execute the current buffer
+Plug 'itchyny/lightline.vim'
+Plug 'wadackel/vim-dogrun'
 
 Plug 'junegunn/fzf', { 'do': './install --bin' }
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
@@ -129,7 +132,8 @@ set t_Co=256
 " set the colorscheme
 if g:presentation_mode == 0
    set background=dark
-   colo sierra
+   " colo sierra
+   colo dogrun
 else
    set background=light
    colo PaperColor
@@ -144,8 +148,8 @@ set number
 " enable relative line numbers
 set relativenumber
 
-" draw a line at column 100
-set colorcolumn=100
+" draw a line at column 120
+set colorcolumn=120
 
 " don't show the mode as this will be included by the status line
 set noshowmode
@@ -286,6 +290,9 @@ set tabstop=4
 
 " when auto-indenting use 4 spaces (default is 8?)
 set shiftwidth=4
+
+" Set the text width (to be used with gq)
+set textwidth=119 " Less than 120 column
 
 " expand tabs into spaces
 set expandtab
@@ -437,50 +444,56 @@ au! BufNewFile,BufReadPost,BufEnter *.{c.re} set filetype=c
 "  ____) | || (_| | |_| |_| \__ \ | | | | |  __/
 " |_____/ \__\__,_|\__|\__,_|___/_|_|_| |_|\___|
 " Statusline --------------------------------{{{
-highlight status_line_mode_color guifg='#EEE8D5' guibg='#333333' ctermfg=155 cterm=bold term=bold
-highlight status_line_arrow_color guifg='#333333' guibg='#444444' ctermfg=155 cterm=bold term=bold
-highlight status_line_bg_color guifg='#EEE8D5' guibg='#444444' ctermfg=155 cterm=bold term=bold
+let g:lightline = { 'colorscheme' : 'dogrun' }
+" highlight status_line_mode_color guifg='#EEE8D5' guibg='#333333' ctermfg=155 cterm=bold term=bold
+" highlight status_line_arrow_color guifg='#333333' guibg='#444444' ctermfg=155 cterm=bold term=bold
+" highlight status_line_bg_color guifg='#EEE8D5' guibg='#444444' ctermfg=155 cterm=bold term=bold
+" " highlight StatusLineTerm guifg='#EEE8D5' guibg='#444444' ctermfg=155 cterm=bold term=bold
+" " highlight StatusLineTermHC guifg='#EEE8D5' guibg='#444444' ctermfg=155 cterm=bold term=bold
+" " Manually set the status line color.
+" hi StatusLineTerm ctermbg=24 ctermfg=254 guibg=#004f87 guifg=#e4e4e4
+" hi StatusLineTermNC ctermbg=252 ctermfg=238 guibg=#d0d0d0 guifg=#444444
 
-set statusline=%#status_line_mode_color#
-" Editing mode
-set statusline+=%{(mode()=='n')?'\ \ normal\ ':''}
-set statusline+=%{(mode()=='i')?'\ \ insert\ ':''}
-set statusline+=%{(mode()=='r')?'\ \ rplace\ ':''}
-set statusline+=%{(mode()=='v')?'\ \ visual\ ':''}
-" Current buffer number
-set statusline+=\ %n\ 
-" Color
-set statusline+=%#status_line_arrow_color#
-" Arrow
-set statusline+=
-" Color
-set statusline+=%#status_line_bg_color#
-" If paste mode is active
-set statusline+=%{&paste?'\ paste\ ':''}
-" If spell checking is active
-set statusline+=%{&spell?'\ spell\ ':''}
-" Read only flag
-set statusline+=%R
-" Short filename
-set statusline+=\ %t
-" Filetype (as detected) using &ft instead of %Y as a lowercase alternative
-set statusline+=\ (%{&ft})
-" File encoding
-set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
-" Symbol to show the file has been modified
-set statusline+=\ %{&modified?'✘\ ':'\ \ '}
-" Right align
-set statusline+=%=
-" current line of total line, current column of total columns
-set statusline+=\ ℓ\ %l/%L\ ᶜ\ %c/%{virtcol('$')}
-" Color
-set statusline+=%#status_line_arrow_color#
-" Arrow
-set statusline+=\ 
-" Color
-set statusline+=%#status_line_mode_color#
-" Percent of file
-set statusline+=\ %3p%%\ 
+" set statusline=%#status_line_mode_color#
+" " Editing mode
+" set statusline+=%{(mode()=='n')?'\ \ normal\ ':''}
+" set statusline+=%{(mode()=='i')?'\ \ insert\ ':''}
+" set statusline+=%{(mode()=='r')?'\ \ rplace\ ':''}
+" set statusline+=%{(mode()=='v')?'\ \ visual\ ':''}
+" " Current buffer number
+" set statusline+=\ %n\ 
+" " Color
+" set statusline+=%#status_line_arrow_color#
+" " Arrow
+" set statusline+=
+" " Color
+" set statusline+=%#status_line_bg_color#
+" " If paste mode is active
+" set statusline+=%{&paste?'\ paste\ ':''}
+" " If spell checking is active
+" set statusline+=%{&spell?'\ spell\ ':''}
+" " Read only flag
+" set statusline+=%R
+" " Short filename
+" set statusline+=\ %t
+" " Filetype (as detected) using &ft instead of %Y as a lowercase alternative
+" set statusline+=\ (%{&ft})
+" " File encoding
+" set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
+" " Symbol to show the file has been modified
+" set statusline+=\ %{&modified?'✘\ ':'\ \ '}
+" " Right align
+" set statusline+=%=
+" " current line of total line, current column of total columns
+" set statusline+=\ ℓ\ %l/%L\ ᶜ\ %c/%{virtcol('$')}
+" " Color
+" set statusline+=%#status_line_arrow_color#
+" " Arrow
+" set statusline+=\ 
+" " Color
+" set statusline+=%#status_line_mode_color#
+" " Percent of file
+" set statusline+=\ %3p%%\ 
 " }}}
 
 
@@ -493,6 +506,14 @@ set statusline+=\ %3p%%\
 "                                     | |
 "                                     |_|
 " Scratchpad -----------------------------------------{{{
+
+" Disable spell checking in tex comments
+let g:tex_comment_nospell=1
+
+
+set spelllang=en_us
+syntax spell toplevel
+set spell
 
 " new lines inherig the identation of previous lines
 set autoindent
