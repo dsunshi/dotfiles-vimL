@@ -3,7 +3,7 @@ Config {
    -- appearance
      font =         "xft:Bitstream Vera Sans Mono:size=9:bold:antialias=true"
    , bgColor =      "black"
-   , fgColor =      "#646464"
+   , fgColor =      "#967ECB"
    , position =     Top
    , border =       BottomB
    , borderColor =  "#646464"
@@ -38,14 +38,14 @@ Config {
    , commands = 
 
         -- weather monitor
-        [ Run Weather "RJTT" [ "--template", "<skyCondition> | <fc=#4682B4><tempC></fc>°C | <fc=#4682B4><rh></fc>% | <fc=#4682B4><pressure></fc>hPa"
+        [ Run Weather "RJTT" [ "--template", "<skyCondition> | <fc=#3B1D98><tempC></fc>°C | <fc=#3B1D98><rh></fc>% | <fc=#3B1D98><pressure></fc>hPa"
                              ] 36000
 
         -- network activity monitor (dynamic interface resolution)
         , Run DynNetwork     [ "--template" , "<dev>: <tx>kB/s|<rx>kB/s"
                              , "--Low"      , "1000"       -- units: B/s
                              , "--High"     , "5000"       -- units: B/s
-                             , "--low"      , "darkgreen"
+                             , "--low"      , "#ABABAB"
                              , "--normal"   , "darkorange"
                              , "--high"     , "darkred"
                              ] 10
@@ -54,7 +54,7 @@ Config {
         , Run MultiCpu       [ "--template" , "Cpu: <total0>%|<total1>%"
                              , "--Low"      , "50"         -- units: %
                              , "--High"     , "85"         -- units: %
-                             , "--low"      , "darkgreen"
+                             , "--low"      , "#ABABAB"
                              , "--normal"   , "darkorange"
                              , "--high"     , "darkred"
                              ] 10
@@ -63,7 +63,7 @@ Config {
         , Run CoreTemp       [ "--template" , "Temp: <core0>°C|<core1>°C"
                              , "--Low"      , "70"        -- units: °C
                              , "--High"     , "80"        -- units: °C
-                             , "--low"      , "darkgreen"
+                             , "--low"      , "#ABABAB"
                              , "--normal"   , "darkorange"
                              , "--high"     , "darkred"
                              ] 50
@@ -72,7 +72,7 @@ Config {
         , Run Memory         [ "--template" ,"Mem: <usedratio>%"
                              , "--Low"      , "20"        -- units: %
                              , "--High"     , "90"        -- units: %
-                             , "--low"      , "darkgreen"
+                             , "--low"      , "#ABABAB"
                              , "--normal"   , "darkorange"
                              , "--high"     , "darkred"
                              ] 10
@@ -83,7 +83,7 @@ Config {
                              , "--High"     , "80"        -- units: %
                              , "--low"      , "darkred"
                              , "--normal"   , "darkorange"
-                             , "--high"     , "darkgreen"
+                             , "--high"     , "#ABABAB"
 
                              , "--" -- battery specific options
                                        -- discharging status
@@ -91,7 +91,7 @@ Config {
                                        -- AC "on" status
                                        , "-O"	, "<fc=#dAA520>Charging</fc>"
                                        -- charged status
-                                       , "-i"	, "<fc=#006000>Charged</fc>"
+                                       , "-i"	, "<fc=#ABABAB>Charged</fc>"
                              ] 50
 
         -- time and date indicator 
@@ -99,8 +99,8 @@ Config {
         , Run Date           "<fc=#ABABAB>%F (%a) %T</fc>" "date" 10
 
         -- keyboard layout indicator
-        , Run Kbd            [ ("us(cmk_ed_dh)" , "<fc=#4682B4>Colemak</fc>")
-                             , ("us"            , "<fc=#8B0000>US</fc>")
+        , Run Kbd            [ ("us(cmk_ed_dh)" , "<fc=#967ECB>Colemak</fc>")
+                             , ("us"            , "<fc=#967ECB>US</fc>")
                              ]
         ]
    }
