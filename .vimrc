@@ -49,6 +49,7 @@ Plug 'mzlogin/vim-markdown-toc'     " Generate Markdown TOC automatically
 Plug 'thinca/vim-quickrun'          " Quickly execute the current buffer
 Plug 'itchyny/lightline.vim'
 Plug 'wadackel/vim-dogrun'
+Plug 'ap/vim-css-color'
 
 Plug 'junegunn/fzf', { 'do': './install --bin' }
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
@@ -445,55 +446,6 @@ au! BufNewFile,BufReadPost,BufEnter *.{c.re} set filetype=c
 " |_____/ \__\__,_|\__|\__,_|___/_|_|_| |_|\___|
 " Statusline --------------------------------{{{
 let g:lightline = { 'colorscheme' : 'dogrun' }
-" highlight status_line_mode_color guifg='#EEE8D5' guibg='#333333' ctermfg=155 cterm=bold term=bold
-" highlight status_line_arrow_color guifg='#333333' guibg='#444444' ctermfg=155 cterm=bold term=bold
-" highlight status_line_bg_color guifg='#EEE8D5' guibg='#444444' ctermfg=155 cterm=bold term=bold
-" " highlight StatusLineTerm guifg='#EEE8D5' guibg='#444444' ctermfg=155 cterm=bold term=bold
-" " highlight StatusLineTermHC guifg='#EEE8D5' guibg='#444444' ctermfg=155 cterm=bold term=bold
-" " Manually set the status line color.
-" hi StatusLineTerm ctermbg=24 ctermfg=254 guibg=#004f87 guifg=#e4e4e4
-" hi StatusLineTermNC ctermbg=252 ctermfg=238 guibg=#d0d0d0 guifg=#444444
-
-" set statusline=%#status_line_mode_color#
-" " Editing mode
-" set statusline+=%{(mode()=='n')?'\ \ normal\ ':''}
-" set statusline+=%{(mode()=='i')?'\ \ insert\ ':''}
-" set statusline+=%{(mode()=='r')?'\ \ rplace\ ':''}
-" set statusline+=%{(mode()=='v')?'\ \ visual\ ':''}
-" " Current buffer number
-" set statusline+=\ %n\ 
-" " Color
-" set statusline+=%#status_line_arrow_color#
-" " Arrow
-" set statusline+=
-" " Color
-" set statusline+=%#status_line_bg_color#
-" " If paste mode is active
-" set statusline+=%{&paste?'\ paste\ ':''}
-" " If spell checking is active
-" set statusline+=%{&spell?'\ spell\ ':''}
-" " Read only flag
-" set statusline+=%R
-" " Short filename
-" set statusline+=\ %t
-" " Filetype (as detected) using &ft instead of %Y as a lowercase alternative
-" set statusline+=\ (%{&ft})
-" " File encoding
-" set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
-" " Symbol to show the file has been modified
-" set statusline+=\ %{&modified?'✘\ ':'\ \ '}
-" " Right align
-" set statusline+=%=
-" " current line of total line, current column of total columns
-" set statusline+=\ ℓ\ %l/%L\ ᶜ\ %c/%{virtcol('$')}
-" " Color
-" set statusline+=%#status_line_arrow_color#
-" " Arrow
-" set statusline+=\ 
-" " Color
-" set statusline+=%#status_line_mode_color#
-" " Percent of file
-" set statusline+=\ %3p%%\ 
 " }}}
 
 
@@ -513,7 +465,7 @@ let g:tex_comment_nospell=1
 
 set spelllang=en_us
 syntax spell toplevel
-set spell
+set nospell
 
 " new lines inherig the identation of previous lines
 set autoindent
@@ -538,7 +490,6 @@ set formatoptions+=j
 au GUIEnter * simalt ~x
 
 " We can use different key mappings for easy navigation between splits to save a keystroke. So instead of ctrl-w then j, it’s just ctrl-j:
-
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
