@@ -11,7 +11,7 @@ Config {
    -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = "%battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ | %date% || %kbd% "
+   , template = " <icon=haskell.xpm/> | %battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ | %date% || %kbd% "
 
    -- general behavior
    , lowerOnStart =     True    -- send to bottom of window stack on start
@@ -20,6 +20,7 @@ Config {
    , overrideRedirect = True    -- set the Override Redirect flag (Xlib)
    , pickBroadest =     False   -- choose widest display (multi-monitor)
    , persistent =       True    -- enable/disable hiding (True = disabled)
+   , iconRoot = "/home/david/.xmonad/xpm/"  -- default: "."
 
    -- plugins
    --   Numbers can be automatically colored according to their value. xmobar
