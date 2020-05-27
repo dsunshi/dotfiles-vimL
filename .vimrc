@@ -133,11 +133,12 @@ set t_Co=256
 " set the colorscheme
 if g:presentation_mode == 0
    set background=dark
-   " colo sierra
    colo dogrun
+   let g:lightline = { 'colorscheme' : 'dogrun' }
 else
    set background=light
    colo PaperColor
+   let g:lightline = { 'colorscheme' : 'PaperColor_light' }
 endif
 
 " show the ruler on the right side of the status line
@@ -445,7 +446,7 @@ au! BufNewFile,BufReadPost,BufEnter *.{c.re} set filetype=c
 "  ____) | || (_| | |_| |_| \__ \ | | | | |  __/
 " |_____/ \__\__,_|\__|\__,_|___/_|_|_| |_|\___|
 " Statusline --------------------------------{{{
-let g:lightline = { 'colorscheme' : 'dogrun' }
+" let g:lightline = { 'colorscheme' : 'dogrun' }
 " }}}
 
 
