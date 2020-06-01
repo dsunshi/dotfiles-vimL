@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# fzfmenu - fzf as dmenu replacement
+
+
+# it's better to use st here (starts a lot faster than pretty much everything else)
+st -c fzfmenu -n fzfmenu -e sh -c "compgen -c | sort -u  | fzf | xargs go run ~/.bin/lnch.go"
+

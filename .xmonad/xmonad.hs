@@ -146,7 +146,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
 
     -- Toggle keyboard layout
-    , ((modm              , xK_Escape ), spawn "/home/david/bin/layout_switch.sh")
+    , ((modm              , xK_Escape ), spawn "/home/david/.bin/layout_switch.sh")
+
+    -- fzf dmenu alternative
+    , ((modm              , xK_f ), spawn "/home/david/.bin/fzfmenu")
 
     -- Toggle the status bar gap
     -- Use this binding with avoidStruts from Hooks.ManageDocks.
@@ -250,6 +253,7 @@ myLayout = avoidStruts (tiled ||| Mirror tiled ||| Full)
 myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
+    , className =? "fzfmenu"        --> doFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore ]
 
