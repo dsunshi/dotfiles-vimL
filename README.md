@@ -85,13 +85,16 @@ Tools](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?s
 
 ```bash
 cd ~/.vim/plugged/YouCompleteMe
-python install.py --clangd-completer --msvc=15
+python install.py --clangd-completer
 ```
+
+*Note:* If needed you may specify the version of MS Build tools via: `--msvc=15`
+
 #### Rust
 
 ```bash
 cd ~/.vim/plugged/YouCompleteMe
-python install.py --rust-completer --msvc=15
+python install.py --rust-completer
 ```
 
 ## Environment Settings
