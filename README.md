@@ -1,5 +1,5 @@
 # Vim Configuration
-<!-- vim-markdown-toc GFM -->
+
 ## External Dependencies
 
 These tools must exist in the user's `PATH`:
@@ -22,6 +22,8 @@ find out what version Vim is using by running `:version`.
 **Note 2 for Python**: The 32 or 64 bit versions of python **and** Vim **must match**. 64 bit Vim,
 will **not** work with 32 bit python. Just as 32 bit Vim does not work with 64 bit python.
 
+**Note 3 for Python**: Python 3 needs to be in your path!
+
 ## Initial Configuration
 
 **Note:** for windows: depending on the shell you are using (command window v. power shell) you
@@ -33,6 +35,8 @@ The plugin manager of choice is `vim-plug` and can be installed via:
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 ```
+**Note:** this will also work within git bash for windows.
+
 or if you are behind a proxy:
 ```bash
 curl -fLo ~/.vim/autoload/plug.vim -x <[protocol://][user:password@]proxyhost[:port]> \
@@ -74,52 +78,21 @@ Since I am personnaly a fan of Rust this seemed like an interesting GUI to Neovi
 This example is specific for the additional support of c/c++, rust, and javascript and is meant
 to supplement the full guide found [here](https://github.com/ycm-core/YouCompleteMe#full-installation-guide).
 
+Under windows install the latest version of Microsoft build tools: [Visual Studio 2019 Build
+Tools](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools&rel=16)
+
 #### Installation of c/c++ support
 
 ```bash
-cd ~
-mkdir ycm_build
-cd ycm_build
-cmake -G "Visual Studio 15 Win64" -DPATH_TO_LLVM_ROOT=C:\LLVM . ~/.vim/plugged/YouCompleteMe/third_party/ycmd/cpp
-cmake --build . --target ycm_core --config Release
+cd ~/.vim/bundle/YouCompleteMe
+python install.py --clangd-completer --msvc=15
 ```
-
-**Note 1:** The `-G` argument "Visual Studio 15 Win64" is for Visual Studio 2017 on a 64-bit machine.
-
-Another example using Visual Studio Studio 2019 on a 64-bit machine:
-```bash
-cmake -G "Visual Studio 16" -A"x64"  -DPATH_TO_LLVM_ROOT=C:\LLVM . %userprofile%/.vim/plugged/YouCompleteMe/third_party/ycmd/cpp
-```
-
-**Note 2:** The `-DPATH_TO_LLVM_ROOT` is the path given to install libclang.
-
-#### Faster regex engine
-```bash
-cd ~
-mkdir regex_build
-cd regex_build
-cmake -G "Visual Studio 15 Win64" . ~/.vim/plugged/YouCompleteMe/third_party/ycmd/third_party/cregex 
-cmake --build . --target _regex --config Release
-```
-
-#### Javascript/typescript
-```bash
-cd ~/.vim/plugged/YouCompleteMe/third_party/ycmd
-npm install -g --prefix third_party/tsserver typescript
-```
-
 #### Rust
+
 ```bash
-cd ~
-mkdir rustup_home_temp
-set RUSTUP_HOME=~/rustup_home_temp
-rustup toolchain install nightly
-rustup default nightly
-rustup component add rls rust-analysis rust-src
+cd ~/.vim/bundle/YouCompleteMe
+python install.py --rust-completer --msvc=15
 ```
-* Ensure that `~/.vim/plugged/YouCompleteMe/third_party/ycmd/third_party/rls` directory exists and is empty.
-* Go into the `~/rustup_home_temp` and then into `toolchains/<toolchain>`.
-* Finally, move everything from that directory to  `~/.vim/plugged/YouCompleteMe/third_party/ycmd/third_party/rls`.
 
 ## Environment Settings
 
@@ -202,24 +175,3 @@ To open a selected file:
 
 To close the file search, use either <kbd>ESC</kbd> or <kbd>CTRL</kbd>+<kbd>C</kbd>
 
-
-* [External Dependencies](#external-dependencies)
-* [Initial Configuration](#initial-configuration)
-* [Neovim](#neovim)
-* [Neovide](#neovide)
-        * [Dependencies](#dependencies)
-    * [YouCompleteMe](#youcompleteme)
-        * [Installation of c/c++ support](#installation-of-cc-support)
-        * [Faster regex engine](#faster-regex-engine)
-        * [Javascript/typescript](#javascripttypescript)
-        * [Rust](#rust)
-* [Environment Settings](#environment-settings)
-    * [GitHub styled Markdown](#github-styled-markdown)
-* [Mappings](#mappings)
-    * [Leader Key Mappings](#leader-key-mappings)
-* [Plugins](#plugins)
-    * [Ultisnips](#ultisnips)
-        * [Options](#options)
-    * [fzf](#fzf)
-
-<!-- vim-markdown-toc -->
