@@ -175,7 +175,7 @@ if has('win32')
       if g:presentation_mode == 1
           set guifont=Source\ Code\ Pro:h18
       else
-          set guifont=Source\ Code\ Pro:h10
+          set guifont=JetBrains\ Mono:h12
       endif
   endif
 else
