@@ -84,13 +84,13 @@ Tools](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?s
 #### Installation of c/c++ support
 
 ```bash
-cd ~/.vim/bundle/YouCompleteMe
+cd ~/.vim/plugged/YouCompleteMe
 python install.py --clangd-completer --msvc=15
 ```
 #### Rust
 
 ```bash
-cd ~/.vim/bundle/YouCompleteMe
+cd ~/.vim/plugged/YouCompleteMe
 python install.py --rust-completer --msvc=15
 ```
 
